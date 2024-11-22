@@ -1,11 +1,3 @@
-import "../assets/theme/styles/base.css";
-import "../assets/theme/styles/buttons.css";
-import "../assets/theme/styles/components.css";
-import "../assets/theme/styles/navigation.css";
-import "../assets/theme/styles/main.css";
-import "../assets/theme/styles/utilities.css";
-
-// Importing Images
 import featureShape from "../assets/theme/images/icons/feature-shape.svg";
 import featureIcon1 from "../assets/theme/images/icons/feature-icon-1.svg";
 import featureIcon2 from "../assets/theme/images/icons/feature-icon-2.svg";

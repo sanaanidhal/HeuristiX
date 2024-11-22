@@ -1,12 +1,5 @@
 import bannerImg from "../assets/theme/images/banner-img.png"; 
 import bannerShape from "../assets/theme/images/banner-shape.svg";
-import '../assets/theme/styles/base.css'
-import '../assets/theme/styles/buttons.css'
-import '../assets/theme/styles/components.css'
-import '../assets/theme/styles/navigation.css'
-import '../assets/theme/styles/main.css'
-import '../assets/theme/styles/utilities.css'
-
 
 const Banner = () => {
   return (

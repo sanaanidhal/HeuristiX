@@ -499,7 +499,7 @@ select:invalid {
 
     &::after,
     &::before {
-      @apply absolute h-5 w-5 bg-[url('../images/icons/quote.svg')] bg-contain bg-no-repeat content-[''] lg:h-8 lg:w-8;
+      @apply absolute h-5 w-5 bg-[url('src/assets/theme/images/icons/quote.svg')] bg-contain bg-no-repeat content-[''] lg:h-8 lg:w-8;
     }
 
     &::before {

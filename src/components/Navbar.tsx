@@ -19,7 +19,7 @@ const Navbar = () => {
       <nav className="navbar container">
         {/* Logo */}
         <div className="order-0">
-          <a href="index.tsx">
+          <a href="/">
             <img src={logo} height="30" width="147" alt="logo" />
           </a>
         </div>
@@ -62,22 +62,22 @@ const Navbar = () => {
           }`}
         >
           <li className="nav-item">
-            <a href="" className="nav-link">
+            <a href="/" className="nav-link">
               Home
             </a>
           </li>
           <li className="nav-item">
-            <a href="about.html" className="nav-link">
+            <a href="/about" className="nav-link">
               About
             </a>
           </li>
           <li className="nav-item">
-            <a href="blog.html" className="nav-link">
-              Blog
+            <a href="/communitydiscussion" className="nav-link">
+              Community
             </a>
           </li>
           <li className="nav-item">
-            <a href="features.html" className="nav-link">
+            <a href="/features" className="nav-link">
               Features
             </a>
           </li>
@@ -132,14 +132,14 @@ const Navbar = () => {
             </ul>
           </li>
           <li className="nav-item">
-            <a href="contact.html" className="nav-link">
+            <a href="/contact" className="nav-link">
               Contact
             </a>
           </li>
           <li className="nav-item mt-3.5 lg:hidden">
             <a
               className="btn btn-white btn-sm border-border"
-              href="signin.html"
+              href="/signin"
             >
               Sign In Now
             </a>
@@ -148,7 +148,7 @@ const Navbar = () => {
 
         {/* Call to Action */}
         <div className="order-1 ml-auto hidden items-center md:order-2 md:ml-0 lg:flex">
-          <a className="btn btn-white btn-sm" href="signup.html">
+          <a className="btn btn-white btn-sm" href="/signup">
             Sign Up Now
           </a>
         </div>
