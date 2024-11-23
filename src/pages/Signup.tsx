@@ -19,7 +19,7 @@ const Signup = () => {
           <div
             className="relative my-8 text-center after:absolute after:left-0 after:top-1/2 after:z-[0] after:w-full after:border-b after:border-border after:content-['']"
           >
-            <span className="relative z-[1] inline-block bg-white px-2"
+            <span className="relative z-[1] inline-block bg-transparent text-dark px-2"
             >Or Sign Up With Email</span>
           </div>
 

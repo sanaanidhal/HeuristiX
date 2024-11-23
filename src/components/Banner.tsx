@@ -9,14 +9,13 @@ const Banner = () => {
           {/* Left Column */}
           <div className="lg:col-6">
             <h1 className="banner-title">
-              Scale design & dev operations with Avocode Enterprise
+              Dive into NP-Hard Problems: Algorithms and Solutions
             </h1>
             <p className="mt-6">
-              A fully integrated suite of authentication & authoriz products,
-              Stytch’s platform removes the headache of.
+            Explore the complexities of NP-hard problems and discover how metaheuristic algorithms provide innovative solutions. Join our community to collaborate and learn. 
             </p>
-            <a className="btn btn-white mt-8" href="#">
-              Download The Theme
+            <a className="btn btn-white mt-8" href="/signin">
+              Join Our Community Now !
             </a>
           </div>
 

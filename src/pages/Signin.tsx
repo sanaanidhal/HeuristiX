@@ -4,7 +4,7 @@
     <section className="">
     <div className="container max-w-full">
       <div className="row">
-        <div className="min-h-[980px] bg-white py-10 lg:col-6 lg:py-[114px]">
+        <div className="min-h-[980px] bg-transparent py-10 lg:col-6 lg:py-[114px] background-image: url('src\assets\theme\images\body-bg.svg');"  >
           <div className="mx-auto w-full max-w-[480px]">
             <img className="mb-8 w-10" src="src/assets/theme/images/logoCropped.png" alt="" />
             <h1 className="mb-4">Sign In</h1>
@@ -20,7 +20,7 @@
             <div
               className="relative my-8 text-center after:absolute after:left-0 after:top-1/2 after:z-[0] after:w-full after:border-b after:border-border after:content-['']"
             >
-              <span className="relative z-[1] inline-block bg-white px-2"
+              <span className="relative z-[1] inline-block bg-transparent text-dark px-2"
                 >Or Sign In With Email</span
               >
             </div>

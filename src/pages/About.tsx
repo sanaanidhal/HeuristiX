@@ -2,10 +2,10 @@ import  { useEffect, useState } from "react";
 
 const AboutPage = () => {
   const counters = [
-    { target: 25, suffix: "M", color: "#A3A1FB", label: "Customers" },
-    { target: 440, suffix: "M", color: "#5EE2A0", label: "Products sold" },
-    { target: 50, suffix: "K", color: "#0000FF", label: "Online stores" },
-    { target: 20, suffix: "K", color: "#FEC163", label: "Transactions" },
+    { target: 500, suffix: "", color: "#A3A1FB", label: "Algorithms Explored" },
+    { target: 440, suffix: "M", color: "#5EE2A0", label: "Products " },
+    { target: 50, suffix: "K", color: "#0000FF", label: "Community Members" },
+    { target: 20, suffix: "K", color: "#FEC163", label: "Discussions" },
   ];
 
   const [counts, setCounts] = useState(
@@ -79,14 +79,13 @@ const AboutPage = () => {
           </ul>
 
           <div className="page-hero-content mx-auto max-w-[768px]">
-            <h1 className="mb-5 mt-8">About our company</h1>
+            <h1 className="mb-5 mt-8">About NP-Hard Explorer</h1>
             <p>
-              Donec sollicitudin molestie malesuada. Mauris pellentesque nec,
-              egestas non nisi. Cras ultricies ligula sed magna dictum porta.
+            NP-Hard Explorer is a platform dedicated to the study and application of NP-hard problems, bringing together enthusiasts, students, and experts to discuss, learn, and innovate.
             </p>
             <div className="mt-11 flex justify-center">
               <a className="btn btn-primary m-3" href="#">
-                Download The Theme
+              Join Our Community Now !
               </a>
               <a className="btn btn-outline-primary m-3" href="#">
                 Learn more

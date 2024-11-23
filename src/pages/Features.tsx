@@ -89,7 +89,7 @@ const Features = () => {
           malesuada. Mauris pellentesque nec, egestas non nisi. Cras ultricies
           ligula sed magna dictum porta. Lorem
         </p>
-        <a className="btn btn-primary mt-6" href="#">Download The Theme</a>
+        <a className="btn btn-primary mt-6" href="#">Join Our Community Now !</a>
       </div>
     </div>
   </div>
