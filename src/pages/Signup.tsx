@@ -1,4 +1,45 @@
+import  { useState, useEffect } from 'react';
+import axios from 'axios';
+
+
 const Signup = () => {
+
+  const [users, setUsers] = useState([]);
+  useEffect(() => {
+    const fetchUsers = async () => {
+        try {
+            const response = await axios.get('http://localhost:5000/api/users');
+            setUsers(response.data);
+        } catch (error) {
+            console.error('Error fetching users:', error);
+        }
+    };
+
+    fetchUsers();
+}, []);
+
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
+  const addUser = async (e:any) => {
+    e.preventDefault();
+    try {
+        const response = await axios.post('http://localhost:5000/api/users', {
+            name,
+            email,
+            password,
+        });
+        setUsers([...users, response.data]); 
+        setName('');
+        setEmail('');
+        setPassword('');
+    } catch (error) {
+        console.error('Error adding user:', error);
+    }
+  };
+
+    
   return (
     <section className="">
   <div className="container max-w-full">
@@ -23,14 +64,17 @@ const Signup = () => {
             >Or Sign Up With Email</span>
           </div>
 
-          <form action="#">
+          <form onSubmit={addUser}>
             <div className="form-group">
               <label htmlFor="name" className="form-label">Full Name</label>
               <input
                 type="text"
                 id="name"
+                value={name}
+                onChange={(e) => setName(e.target.value)} 
                 className="form-control"
                 placeholder="Your Full Name"
+                required
               />
             </div>
             <div className="form-group mt-4">
@@ -38,8 +82,11 @@ const Signup = () => {
               <input
                 type="email"
                 id="email"
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
                 className="form-control"
                 placeholder="Your Email Address"
+                required
               />
             </div>
             <div className="form-group mt-4">
@@ -48,7 +95,10 @@ const Signup = () => {
                 type="password"
                 id="password"
                 className="form-control"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 placeholder="Your Password"
+                required
               />
             </div>
             <input
