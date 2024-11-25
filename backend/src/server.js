@@ -25,6 +25,37 @@ app.get('/api', (req, res) => {
     
 });
 
+app.post('/api/signin', async (req, res) => {
+    const { email, password } = req.body;
+    try {
+        // Check if the user exists
+        const result = await pool.query('SELECT * FROM users WHERE email = $1', [email]);
+
+        if (result.rows.length === 0) {
+            // User not found
+            return res.status(404).send('User not found');
+        }
+
+        // Check if the password matches
+        const user = result.rows[0];
+        if (user.password !== password) {
+            return res.status(401).send('Incorrect password');
+        }
+        // Success
+        // Include user data in the response
+        return res.status(200).json({
+            id: user.id,
+            name: user.name,
+            email: user.email, // Ensure this column exists in your DB
+        });
+
+    } catch (err) {
+        console.error('Error during sign-in:', err.message);
+        res.status(500).send('Server error');
+    }
+});
+
+
 app.get('/api/db', (req, res) => {
     pool.query('SELECT 1', (err, result) => {
         if (err) {
@@ -49,7 +80,13 @@ app.post('/api/users', async (req, res) => {
         res.json(result.rows[0]);
     } catch (err) {
         console.error(err.message);
+        if(err.code === '23505')
+        {
+            // PostgreSQL error code for unique constraint violation
+            return res.status(400).send("Duplicate key violation: users_email_key");
+        }
         res.status(500).send('Server error');
+
     }
 });
 app.get('/api/users', async (req, res) => {

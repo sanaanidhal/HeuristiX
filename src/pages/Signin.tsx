@@ -1,5 +1,94 @@
+import  { useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useUser } from '../assets/theme/scripts/UserContext'; // Access context
 
- const Signin = () => {
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+ 
+ 
+const Signin = () => {
+  const { setUser }=useUser();
+
+const [email, setEmail] = useState('');
+const [password, setPassword] = useState('');
+const navigate = useNavigate();
+
+
+const verifyUser = async (e:any) => {
+  e.preventDefault();
+  try {
+      const response = await axios.post('http://localhost:5000/api/signin', {
+          email,
+          password,
+      });
+      // If login is successful
+      if (response.status === 200) {
+        const user = response.data; // Assuming the backend sends user data
+      console.log('Login successful:', response.data);
+      toast.success('Login Successful ! ', {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        });
+
+        // Save user data in global state
+        setUser(user);
+        localStorage.setItem('user', JSON.stringify(user));
+
+        // Redirect after a brief delay
+
+        setTimeout(() => {
+          navigate('/');
+      }, 1000); 
+      }
+  } catch (error:any) {
+      // Handle errors
+      if (error.response && error.response.status === 404) {
+        toast.warn('User Not Found ! ', {
+          position: "top-center",
+          autoClose: 8000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
+      } else if (error.response && error.response.status === 401) {
+        toast.error('Incorrect Password ! ', {
+          position: "top-center",
+          autoClose: 8000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
+      } else {
+          console.error('Error during sign-in:', error.message);
+          toast.error('Error during sign-in ! Please Try Again ', {
+            position: "top-center",
+            autoClose: 8000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            });
+      }
+  }
+};
+
+
+
   return (
     <section className="">
     <div className="container max-w-full">
@@ -25,7 +114,7 @@
               >
             </div>
   
-            <form action="#">
+            <form onSubmit={verifyUser}>
               <div className="form-group">
                 <label htmlFor="email" className="form-label">Email Adrdess</label>
                 <input
@@ -33,6 +122,9 @@
                   id="email"
                   className="form-control"
                   placeholder="Your Email Address"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  required
                 />
               </div>
               <div className="form-group mt-4">
@@ -42,6 +134,9 @@
                   id="password"
                   className="form-control"
                   placeholder="Your Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  required
                 />
               </div>
               <input
@@ -49,6 +144,7 @@
                 type="submit"
                 value="Sign In"
               />
+              <ToastContainer />
               <p className="mt-6 text-center">
                 Can't <span className="text-dark" >log in</span>? <br />
                 <a className="text-dark" href="/signup">Sign up</a> for create

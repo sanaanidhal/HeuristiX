@@ -1,0 +1,45 @@
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+  
+  .modal {
+    background: white;
+    padding: 2.5rem;
+    border-radius: 10px;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  .modal p{
+    font-size: larger;
+  }
+  
+  .modal-actions {
+    margin-top: 10px;
+    display: flex;
+    justify-content: space-around;
+  }
+  
+
+.user-profile {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+    color: black  ;
+    font-weight: bold;
+}
+
+.profile-pic {
+    width: 3rem;
+    height: 2rem;
+    border-radius: 50%;
+}

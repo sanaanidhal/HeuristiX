@@ -1,8 +1,11 @@
 import  { useState, useEffect } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 
 
 const Signup = () => {
+
 
   const [users, setUsers] = useState([]);
   useEffect(() => {
@@ -34,8 +37,54 @@ const Signup = () => {
         setName('');
         setEmail('');
         setPassword('');
-    } catch (error) {
+        toast.success('Your Account Has Been Created! , You can now SIGN IN !', {
+          position: "top-center",
+          autoClose: 8000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
+        toast.success('Weclome to the Community !', {
+          position: "top-center",
+          autoClose: 8000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
+    } catch (error:any) {
         console.error('Error adding user:', error);
+        if (error.response &&
+          error.response.data &&
+          error.response.data.includes('users_email_key'))
+          {
+          toast.warn('This Email is already registered !', {
+          position: "top-right",
+          autoClose: 10000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          });
+        } else {
+          toast.error('Something went wrong! Try again', {
+            position: "top-right",
+            autoClose: 10000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "light",
+            });
+        }
     }
   };
 
@@ -106,6 +155,7 @@ const Signup = () => {
               type="submit"
               value="Sign Up"
             />
+            <ToastContainer />
             <p className="mt-6 text-center">
               Already have <span className="text-dark" >account?</span> <br></br>
               <a className="text-dark" href="/signin">Sign In</a> to your account.

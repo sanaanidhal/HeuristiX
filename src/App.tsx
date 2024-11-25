@@ -10,29 +10,31 @@ import Contact from './pages/Contact';
 import Features from './pages/Features';
 import AboutPage from './pages/About';
 
+import { UserProvider  } from './assets/theme/scripts/UserContext';
+
+
 
 function App() {
 
   return (
+    <UserProvider>
+
     <Router>
         <Navbar />
       <Routes>
-      
+        <Route path="/signin" element={<Signin />} />
+        <Route path="/signup" element={<Signup />} />
         <Route path="/" element={<Home />} />
         <Route path="/communitydiscussion" element={<Community />} />
         <Route path="/singlediscussion" element={<SingleCommunity />} />
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/signin" element={<Signin />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/features" element={<Features />} />
         <Route path="/about" element={<AboutPage />} />
-
-        
-        
-    
       </Routes >
       <Footer />
     </Router >
+    </UserProvider>
+
 
   )
 }
