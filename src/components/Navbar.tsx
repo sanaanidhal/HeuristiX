@@ -25,13 +25,14 @@ setMenuOpen(!menuOpen);
 
 const confirmLogout = () => {
 setIsModalOpen(true);
-navigate('/signin');
+
 };
 
 const handleLogout = () => {
 setUser(null); // Clear user from context
 localStorage.removeItem('user'); // Clear user data from localStorage
 setIsModalOpen(false); // Close modal
+navigate('/signin');  
 };
 
 return (
@@ -77,7 +78,7 @@ return (
         </a>
       </li>
       <li className="nav-item">
-        <a href="/communitydiscussion" className="nav-link">
+        <a href="/community" className="nav-link">
           Community
         </a>
       </li>
@@ -178,8 +179,10 @@ return (
               <ul>
                 <li className="nav-item nav-dropdown group relative">
                   <span className="nav-link inline-flex items-center">
+                    <span className='username'>
                     {user.name}
-                    <svg className="h-4 w-4 fill-current" viewBox="0 0 20 20">
+                    </span>
+                    <svg className="h-5 w-5 fill-current" viewBox="0 0 20 20">
                       <path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z" />
                     </svg>
                   </span>
@@ -187,7 +190,7 @@ return (
                   <ul
                     className="nav-dropdown-list hidden group-hover:block lg:invisible lg:absolute lg:block lg:opacity-0 lg:group-hover:visible lg:group-hover:opacity-100">
                      <li className="nav-dropdown-item">
-                      <a href="career-single.html" className="nav-dropdown-link">
+                      <a href="/profile" className="nav-dropdown-link">
                         Profile
                       </a>
                     </li>
@@ -200,7 +203,7 @@ return (
                 </li>
               </ul>
               <a href="/profile"><img
-                  src="https://static.vecteezy.com/system/resources/previews/019/879/186/non_2x/user-icon-on-transparent-background-free-png.png"
+                  src={user.profilepic}
                   alt="Profile" className="profile-pic" /></a>
 
             </div>

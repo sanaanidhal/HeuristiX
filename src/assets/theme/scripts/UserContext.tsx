@@ -5,7 +5,7 @@ interface User {
   id: number;
   name: string;
   email: string;
-  profilePic: string;
+  profilepic?: string;
 }
 
 // Define the context type
