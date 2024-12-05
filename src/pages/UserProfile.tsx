@@ -2,8 +2,8 @@ import  { useState ,  useEffect } from "react";
 import "../styles/UserProfile.css"; // Add your styles here
 import { useUser } from "../assets/theme/scripts/UserContext";
 import axios from "axios";
-
-
+import { ToastContainer, toast } from 'react-toastify';
+import moment from 'moment';
 
 
 const UserProfile = () => {
@@ -24,8 +24,8 @@ const UserProfile = () => {
           <ul>
             <li><strong>Full Name:</strong> {user.name}</li>
             <li><strong>Email:</strong> {user.email} </li>
-            <li><strong>Location:</strong> San Francisco, CA</li>
-            <li><strong>Member Since:</strong> January 2022</li>
+            <li><strong>Location:</strong> {user.location} </li>
+            <li><strong>Member Since: </strong> {moment(user?.created_at).format('MMMM Do, YYYY')}</li>
           </ul>
         </>
       ),
@@ -227,6 +227,16 @@ const UserProfile = () => {
             const response = await axios.get(`http://localhost:5000/api/users/${user.id}`);
             setUser(response.data); // Update context
             setImageUrl(response.data.profilepic); // Update local state
+            toast.success('Profile Picture Changed ! ', {
+              position: "top-right",
+              autoClose: 10000,
+              hideProgressBar: true,
+              closeOnClick: true,
+              pauseOnHover: true,
+              draggable: true,
+              progress: undefined,
+              theme: "light",
+              });
           } catch (err) {
             console.error("Error updating profile picture:", err);
           }
@@ -328,11 +338,12 @@ if (!user) {
                 <div className="text-center">
                   <img
                     className="mx-auto rounded-full border border-border"
-                    src={imageUrl || "images/user-avatar.png"}
+                    src={imageUrl || "src/assets/theme/images/shape.svg"}
                     alt="User Avatar"
                     width="120"
                     height="120"
                   />
+                  <ToastContainer />
                   <h1 className="mt-6 text-2xl font-bold"> {user.name} </h1>
                   <p className="mt-2 text-gray-600">{user?.email}</p>
                   <p className="mt-4 text-gray-700">

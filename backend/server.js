@@ -136,6 +136,8 @@ app.post('/api/signin', async (req, res) => {
             name: user.name,
             email: user.email, 
             profilepic: user.profilepic, 
+            created_at: user.created_at,
+            location: user.location,
         });
 
     } catch (err) {
@@ -160,11 +162,11 @@ app.get('/api/db', (req, res) => {
 
 
 app.post('/api/users', async (req, res) => {
-    const { name, email ,password } = req.body;
+    const { name, email ,password, location } = req.body;
     try {
         const result = await pool.query(
-            'INSERT INTO users (name, email, password) VALUES ($1, $2, $3) RETURNING *',
-            [name, email, password]
+            'INSERT INTO users (name, email, password, location) VALUES ($1, $2, $3, $4) RETURNING *',
+            [name, email, password, location]
         );
         res.json(result.rows[0]);
     } catch (err) {
@@ -193,7 +195,7 @@ app.get('/api/users/:id', async (req, res) => {
     try {
         // Fetch the user, including their profile picture URL
         const result = await pool.query(
-            'SELECT id, name, email, profilepic FROM users WHERE id = $1',
+            'SELECT id, name, email, profilepic , created_at FROM users WHERE id = $1',
             [id]
         );
 

@@ -139,6 +139,7 @@ const verifyUser = async (e:any) => {
                   required
                 />
               </div>
+              
               <input
                 className="btn btn-primary mt-10 block w-full"
                 type="submit"

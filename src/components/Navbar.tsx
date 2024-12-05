@@ -203,7 +203,7 @@ return (
                 </li>
               </ul>
               <a href="/profile"><img
-                  src={user.profilepic}
+                  src={user.profilepic|| "src/assets/theme/images/shape.svg"}
                   alt="Profile" className="profile-pic" /></a>
 
             </div>
