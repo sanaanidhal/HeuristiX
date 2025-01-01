@@ -24,6 +24,7 @@ const Signup = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [location, setLocation] = useState('');
 
   const addUser = async (e:any) => {
     e.preventDefault();
@@ -32,6 +33,8 @@ const Signup = () => {
             name,
             email,
             password,
+            location,
+
         });
         setUsers([...users, response.data]); 
         setName('');
@@ -150,6 +153,18 @@ const Signup = () => {
                 required
               />
             </div>
+            <div className="form-group mt-4">
+                <label htmlFor="Location" className="form-label">Location</label>
+                <input
+                  type="text"
+                  id="Location"
+                  className="form-control"
+                  placeholder="City, Country"
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                  required
+                />
+              </div>
             <input
               className="btn btn-primary mt-10 block w-full"
               type="submit"

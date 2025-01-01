@@ -1,4 +1,31 @@
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom"; // To capture URL params
+import axios from "axios";
+import moment from 'moment';
+import { useUser } from "../assets/theme/scripts/UserContext";
+
+
 const SingleCommunity = () => {
+  const [post, setPost] = useState([]); // State to store posts
+  const { id } = useParams(); // Capture post ID from URL
+  const { setUser , user }=useUser();
+
+  useEffect( () =>  {
+    const fetchPost = async () => {
+      try{
+        const response = await axios.get(`http://localhost:5000/api/posts/${id}`);
+        setPost(response.data);
+      } catch(error) {
+        console.error("Error fetching posts:", error);
+      }
+    };
+    fetchPost();
+  }, [id]);
+  
+  if (!post) {
+    return <p>Post not found</p>;
+  }
+
   return (
     <>
 <img
@@ -19,13 +46,14 @@ const SingleCommunity = () => {
 
 <section className="section blog-single">
   <div className="container">
+
     <div className="row justify-center">
       <div className="lg:col-10">
         <img className="rounded-xl" src="src/assets/theme/images/blog-single.png" alt="" />
       </div>
       <div className="mt-10 max-w-[810px] lg:col-9">
         <h1 className="h2">
-          Memo To All Housekeeping, Kitchen, & Dining Room Staff At Mar-A-Lago
+          {post.title}
         </h1>
         <div className="mt-6 mb-5 flex items-center space-x-2">
           <div
@@ -34,65 +62,25 @@ const SingleCommunity = () => {
             <img src="src/assets/theme/images/blog-author.png" alt="" />
           </div>
           <div className="">
-            <p className="text-dark">Cameron Williamson</p>
-            <span className="text-sm">Nov 28, 2019. 5 Min read</span>
+            <p className="text-dark"> {post.name} </p>
+            <span className="text-sm">{moment(post.created_at).format('MMMM Do, YYYY')}. {post.timetoread} Read</span>
           </div>
         </div>
 
         <div className="content">
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nec et
-            ipsum ullamcorper venenatis fringilla. Pretium, purus eu nec
-            vulputate vel habitant egestas. Congue ornare at ipsum, viverra.
-            Vitae magna faucibus eros, lectus sociis. Etiam nunc amet id
-            dignissim. Feugiat id tempor vel sit in ornare turpis posuere. Eu
-            quisque integer non rhoncus elementum vel. Quis nec viverra lectus
-            augue nec praesent Laoreet mauris odio ut nec. Nisl, sed adipiscing
-            dignissim arcu placerat ornare pharetra nec in. Ultrices in nisl
-            potenti vitae tempus. Auctor consectetur luctus eu in amet sagittis.
-            Dis urna, vel hendrerit convallis Senectus feugiat faucibus commodo
-            egestas leo vitae in morbi. Enim arcu dignissim mauris, eu, eget
+            {post.content}
           </p>
 
-          <p>
-            pharetra odio amet pellentesque. Egestas nisi adipiscing sed in
-            lectus. Vitae ultrices malesuada aliquet Faucibus consectetur tempus
-            adipiscing vitae. Nec blandit tincidunt nibh nisi, quam volutpat. In
-            lacus laoreet diam risus. Mauris, risus faucibus sagittis sagittis
-            tincidunt id justo. Diam massa pretium consequat mauris viverra.
-            Sagittis eu libero
-          </p>
-          <div className="blockquote my-10 rounded-xl bg-white py-8 px-16 lg:px-20">
+         
+          {/* <div className="blockquote my-10 rounded-xl bg-white py-8 px-16 lg:px-20">
             <blockquote className="text-2xl text-dark">
               A wise girls her limit to touch.To Repellat neque praesentium .The
               me an idea, so I as quickly To get.
             </blockquote>
             <p className="mt-4 mb-0">Darlene Robertson</p>
-          </div>
+          </div> */}
 
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nec et
-            ipsum ullamcorper venenatis fringilla. Pretium, purus eu nec
-            vulputate vel habitant egestas. Congue ornare at ipsum, viverra.
-            Vitae magna faucibus eros, lectus sociis. Etiam nunc amet id
-            dignissim. Feugiat id tempor vel sit in ornare turpis posuere. Eu
-            quisque integer non rhoncus elementum vel. Quis nec viverra lectus
-            augue nec praesent volutpat tortor. Ipsum eget sed tempus luctus
-            nisl. Ut etiam molestie mattis at faucibus mi at pellentesque.
-            Pellentesque morbi nunc, curabitur arcu euismod suscipit. Duis mi
-            sapien, nisl, pulvinar donec non dictum
-          </p>
-
-          <p>
-            Laoreet mauris odio ut nec. Nisl, sed adipiscing dignissim arcu
-            placerat ornare pharetra nec in. Ultrices in nisl potenti vitae
-            tempus. Auctor consectetur luctus eu in amet sagittis. Dis urna, vel
-            hendrerit convallis cursus id. Senectus feugiat faucibus commodo
-            egestas leo vitae in morbi. Enim arcu dignissim mauris, eu, eget
-            pharetra odio amet pellentesque. Egestas nisi adipiscing sed in
-            lectus. Vitae ultrices malesuada aliquet dignissim. Faucibus non
-            tristique eu.
-          </p>
         </div>
         <div className="comments">
           <h3
@@ -148,29 +136,7 @@ const SingleCommunity = () => {
           <p className="mb-4">LEAVE A REPLAY</p>
           <div className="form-group">
             <textarea cols={30} rows={10}></textarea>
-          </div>
-          <div className="row mb-8">
-            <div className="form-group mt-8 md:col-6 lg:col-4">
-              <input type="text" placeholder="Name" />
-            </div>
-            <div className="form-group mt-8 md:col-6 lg:col-4">
-              <input type="text" placeholder="Email" />
-            </div>
-            <div className="form-group mt-8 md:col-6 lg:col-4">
-              <input type="text" placeholder="Website" />
-            </div>
-          </div>
-          <div className="form-group relative flex pl-6">
-            <input
-              className="absolute left-0 top-1"
-              type="checkbox"
-              id="save-info"
-            />
-            <label className="block" htmlFor="save-info"
-              >Save my name, email, and website in this browser for the next
-              time I comment.</label
-            >
-          </div>
+          </div>            
           <input
             type="Submit"
             className="btn btn-primary mt-8 min-w-[189px] cursor-pointer"

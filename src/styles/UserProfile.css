@@ -1,0 +1,47 @@
+/* Floating assets */
+.floating-bubble-1,
+.floating-bubble-2,
+.floating-bubble-3 {
+  position: absolute;
+  z-index: -1;
+}
+
+.floating-bubble-1 {
+  right: 0;
+  top: 0;
+}
+
+.floating-bubble-2 {
+  left: 0;
+  top: 387px;
+}
+
+.floating-bubble-3 {
+  right: 0;
+  top: 605px;
+}
+
+/* Profile Page Styles */
+.profile-page-container {
+  position: relative;
+}
+
+.page-hero {
+  background: #f8f9fa;
+}
+
+.tab-content {
+  padding-top: 1rem;
+}
+
+.tab-content h4 {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.settings { 
+  display: flex;
+  justify-content: space-evenly;
+  margin-top: 2rem;
+
+}
