@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <title>
+    Traveling Salesman Algorithms
+  </title>
+  <meta property="og:title" content="Traveling Salesman Algorithms">
+  <meta charset="utf-8">
+  <meta property="og:type" content="article">
+
+  <meta property="og:description" content="From Naive to Christofide">
+  <meta property="description" content="From Naive to Christofide">
+  <link rel="stylesheet" href="./Traveling-Salesman-Algorithms/styles.css">
+</head>
+
+<body>
+  <div id="idyll-mount">
+    <div class="idyll-root" data-reactroot="">
+      <h3 id="overall_header"></h3>
+      <div style="overflow:hidden">
+        <div
+          style="position:absolute;z-index:1;width:100%;left:0;pointer-events:none;transition:background 0.5s;height:100vh;background-image:url(Traveling-Salesman-Algorithms/pics/dotted.png);background-size:cover;background-position:top center">
+          <div style="flex-direction:column;display:flex;height:100%">
+            <div style="display:flex;flex:0.5"></div>
+            <div style="align-self:stretch;pointer-events:all" class="screen-content">
+              <div class="article-header">
+                <h1 class="hed">Traveling Salesman Algorithms</h1>
+                <h2 class="dek">From Naive to Christofide</h2>
+                <div class="byline"></div>
+              </div>
+            </div>
+            <div style="display:flex;flex:0.5"></div>
+          </div>
+        </div>
+        <div style="width:100%;height:100vh"></div>
+      </div><br />
+      <div style="max-width:90vw;width:45vw;margin:0 auto;padding:0 20px;margin-left:2.5vw;margin-right:2.5vw"
+        class="idyll-BlogWriteup">
+        <h1 id="welcome_header">Welcome!</h1><var name="slideWelcome" value="1"></var>
+        <div class="slideshow" style="position:relative">
+          <div class="slide" style="position:absolute">
+            <h3>How to Read This Article</h3>
+            <p>Our article was written using a component-based library called Idyll. In addition to buttons and sliders
+              you will see the following in this article...<br /><br /><var name="howtovar" value="false"></var><a
+                href="https://en.wikipedia.org/wiki/Hyperlink" target="_blank">This component</a> is an external link
+              which will redirect you to another page.<br /><a
+                href="Traveling-Salesman-Algorithms.html#overall_header"><code>This component</code></a> is an internal
+              link which will send you to a part of the page when clicked on.<br /><span __expr__="[object Object]"
+                class="action">This component</span> is an action link which will trigger some event on the page to do
+              something.<br /><span></span><br />
+              Lastly, this article is only supported on Chrome; other browsers have an SVG rendering bug that can show
+              up.</p><span __expr__="[object Object]" class="action">Let&#x27;s Get Started!</span>
+          </div>
+        </div>
+      </div>
+      <div class="float right" style="float:right;width:50%"><var name="displayAnswer" __expr__="[object Object]"
+          value="false"></var><var name="resetHook" __expr__="[object Object]" value="false"></var>
+        <div style="width:100%"></div><button>↺</button>
+      </div>
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+      <div style="max-width:800px;width:calc(100vw - 2 * 200px);margin:0 auto;padding:0 20px"
+        class="idyll-CenteredWriteup">
+        <p>
+        <h1 id="intro_header">Introduction</h1>
+        Variations of the Traveling Salesman Problem (TSP) have existed since the 1800s. Generally speaking, the problem
+        can be stated as: </p>
+        <blockquote>Given a list of cities and the distances between each pair of cities, what is the shortest possible
+          route that visits each city exactly once and returns to the origin city?</blockquote>
+        <p>In essence, this question is asking us (the salesman) to visit <i> each </i> of the cities via the shortest
+          path that gets us back to our origin city. We can conceptualize the TSP as a graph where each city is a node,
+          each node has an edge to every other node, and each edge weight is the distance between those two nodes.</p>
+        <p>The first computer coded solution of TSP by Dantzig, Fulkerson, and Johnson came in the mid 1950’s with a
+          total of 49 cities. Since then, there have been many algorithmic iterations and 50 years later, the TSP
+          problem has been successfully solved with a node size of 24,978 cities! Multiple variations on the problem
+          have been developed as well, such as <a
+            href="https://neos-guide.org/content/multiple-traveling-salesman-problem-mtsp" target="_blank">mTSP</a>, a
+          generalized version of the problem and <a href="http://ceur-ws.org/Vol-1989/paper14.pdf"
+            target="_blank">Metric TSP</a>, a subcase of the problem.</p>
+        <p>The original Traveling Salesman Problem is one of the fundamental problems in the study of combinatorial
+          optimization—or in plain English: <i>finding the best solution to a problem from a finite set of possible
+            solutions</i>. This field has become especially important in terms of computer science, as it incorporate
+          key principles ranging from searching, to sorting, to graph theory.</p>
+        <h3>Real World Applications</h3>
+        <p>However, before we dive into the nitty gritty details of TSP, we would like to present some real-world
+          examples of the problem to illustrate its importance and underlying concepts. Applications of the TSP include:
+        </p>
+        <div class="float right" style="float:right;width:50%">
+          <blockquote><span>Click on an example to the left for more information!</span></blockquote>
+        </div><var name="realWorldApps" value="Click on an example to the left for more information!"></var>
+        <ol>
+          <li><span __expr__="[object Object]" class="action">Santa delivering presents.</span></li>
+          <li><span __expr__="[object Object]" class="action">Fulfilling an order in a warehouse.</span></li>
+          <li><span __expr__="[object Object]" class="action">Designing and building printed circuit boards.</span></li>
+          <li><span __expr__="[object Object]" class="action">Analyzing an X-Ray.</span></li>
+          <li><span __expr__="[object Object]" class="action">GPS satellite systems.</span></li>
+          <li><span __expr__="[object Object]" class="action">School bus scheduling.</span></li>
+        </ol>
+        <h2>Finding Solutions – Exact vs. Approximation</h2>
+        <p>The difficulty in solving a combinatorial optimization problem such as the TSP lies not in discovering a
+          single solution, but rather quickly verifying that a given solution is the <i> optimal </i> solution. To
+          verify, without a shadow of a doubt, that a single solution is optimized requires both computing all the
+          possible solutions and then comparing your solution to each of them. We will call this solution the
+          <strong>Exact</strong> solution. The number of computations required to calculate this <strong>Exact</strong>
+          solution grows at an enormous rate as the number of cities grow as well. For example, the total number of
+          possible paths for 7 cities is just over <strong>5,000</strong>, for 10 cities it is over <strong>3.6
+            million</strong>, and for 13 cities it is over <strong>6 billion</strong>. Clearly, this growth rate quickly
+          eclipses the capabilities of modern personal computers and determining an exact solution may be near
+          impossible for a dataset with even 20 cities. We will explore the exact solution approach in greater detail
+          during the <a href="./Traveling-Salesman-Algorithms.html#naive_header"><code>Naïve</code></a> section.
+        </p>
+        <p>The physical limitations of finding an exact solution lead us towards a very important concept –
+          <em>approximation algorithms</em>. In an approximation algorithm, we cannot guarantee that the solution is the
+          optimal one, but we can guarantee that it falls within a certain proportion of the optimal solution. The real
+          strength of approximation algorithms is their ability to compute this bounded solution in an amount of time
+          that is several orders of magnitude quicker than the exact solution approach. Later on in this article we will
+          explore two different approximation algorithms,
+          <a href="./Traveling-Salesman-Algorithms.html#nn_header"><code>Nearest Neighbor</code></a> and <a
+            href="./Traveling-Salesman-Algorithms.html#christofides_header"><code>Christofide’s Algorithm</code></a>,
+          and the many facets of each approach.
+        </p>
+      </div>
+      <div style="max-width:90vw;width:45vw;margin:0 auto;padding:0 20px;margin-left:2.5vw;margin-right:2.5vw"
+        class="idyll-BlogWriteup">
+        <h1 id="naive_header">The Naïve Approach</h1>
+      </div>
+      <div class="float right" style="float:right;width:50%">
+        <div style="width:100%"></div>
+        <p>Speed:<var name="speed1" value="50"></var></p><var name="isAutoPlaying1" value="false"></var><var
+          name="increment1" value="false"></var><var name="decrement1" value="false"></var><var name="finalResult1"
+          value="false"></var><var name="updatedCity1" value="false"></var><input type="range" value="50" min="0"
+          max="100" step="1" /><button>←</button><button><span>▷</span></button><button>→</button><button>Final
+          Result</button><button>↺</button><br /><br />
+      </div>
+      <div style="max-width:90vw;width:45vw;margin:0 auto;padding:0 20px;margin-left:2.5vw;margin-right:2.5vw"
+        class="idyll-BlogWriteup"><var name="slideNaive" value="1"></var>
+        <div class="slideshow" style="position:relative">
+          <div class="slide" style="position:absolute">
+            <p>
+            <h3>Introduction</h3>
+            The Naïve, or brute-force, approach computes and compares all possible permutations of paths to discover the
+            shortest unique solution. Given n possible cities, with every city connected by a path to every other city,
+            this results in <span style="display:inline-block"><span> <span class="katex"><span
+                    class="katex-mathml"><math>
+                      <semantics>
+                        <mrow>
+                          <mo>(</mo>
+                          <mi mathvariant="normal">∣</mi>
+                          <mi>V</mi>
+                          <mi mathvariant="normal">∣</mi>
+                          <mo>−</mo>
+                          <mn>1</mn>
+                          <mo>)</mo>
+                          <mo>!</mo>
+                          <mi mathvariant="normal">/</mi>
+                          <mn>2</mn>
+                        </mrow>
+                        <annotation encoding="application/x-tex">(|V| - 1)!/2</annotation>
+                      </semantics>
+                    </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                      style="height:0.75em;"></span><span class="strut bottom"
+                      style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span
+                        class="mopen">(</span><span class="mord mathrm">∣</span><span class="mord mathit"
+                        style="margin-right:0.22222em;">V</span><span class="mord mathrm">∣</span><span
+                        class="mbin">−</span><span class="mord mathrm">1</span><span class="mclose">)</span><span
+                        class="mclose">!</span><span class="mord mathrm">/</span><span
+                        class="mord mathrm">2</span></span></span></span> </span></span> possible cycles. </p>
+            <blockquote>
+              <p> We can imagine that from a starting city, there are <span style="display:inline-block"><span> <span
+                      class="katex"><span class="katex-mathml"><math>
+                          <semantics>
+                            <mrow>
+                              <mi mathvariant="normal">∣</mi>
+                              <mi>V</mi>
+                              <mi mathvariant="normal">∣</mi>
+                              <mo>−</mo>
+                              <mn>1</mn>
+                            </mrow>
+                            <annotation encoding="application/x-tex">|V| - 1</annotation>
+                          </semantics>
+                        </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                          style="height:0.75em;"></span><span class="strut bottom"
+                          style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span
+                            class="mord mathrm">∣</span><span class="mord mathit"
+                            style="margin-right:0.22222em;">V</span><span class="mord mathrm">∣</span><span
+                            class="mbin">−</span><span class="mord mathrm">1</span></span></span></span> </span></span>
+                possibilities for the second city. Following this connection, the second city will then have <span
+                  style="display:inline-block"><span> <span class="katex"><span class="katex-mathml"><math>
+                          <semantics>
+                            <mrow>
+                              <mi mathvariant="normal">∣</mi>
+                              <mi>V</mi>
+                              <mi mathvariant="normal">∣</mi>
+                              <mo>−</mo>
+                              <mn>2</mn>
+                            </mrow>
+                            <annotation encoding="application/x-tex">|V| - 2</annotation>
+                          </semantics>
+                        </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                          style="height:0.75em;"></span><span class="strut bottom"
+                          style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span
+                            class="mord mathrm">∣</span><span class="mord mathit"
+                            style="margin-right:0.22222em;">V</span><span class="mord mathrm">∣</span><span
+                            class="mbin">−</span><span class="mord mathrm">2</span></span></span></span> </span></span>
+                possibilities, and so on and so on... Since our path is bidirectional, it follows that some cycles we
+                calculate at will be disposible as they are duplicates if reversed. Thus we arrive at <span
+                  style="display:inline-block"><span> <span class="katex"><span class="katex-mathml"><math>
+                          <semantics>
+                            <mrow>
+                              <mo>(</mo>
+                              <mi mathvariant="normal">∣</mi>
+                              <mi>V</mi>
+                              <mi mathvariant="normal">∣</mi>
+                              <mo>−</mo>
+                              <mn>1</mn>
+                              <mo>)</mo>
+                              <mo>!</mo>
+                              <mi mathvariant="normal">/</mi>
+                              <mn>2</mn>
+                            </mrow>
+                            <annotation encoding="application/x-tex">(|V| - 1)!/2</annotation>
+                          </semantics>
+                        </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                          style="height:0.75em;"></span><span class="strut bottom"
+                          style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span
+                            class="mopen">(</span><span class="mord mathrm">∣</span><span class="mord mathit"
+                            style="margin-right:0.22222em;">V</span><span class="mord mathrm">∣</span><span
+                            class="mbin">−</span><span class="mord mathrm">1</span><span class="mclose">)</span><span
+                            class="mclose">!</span><span class="mord mathrm">/</span><span
+                            class="mord mathrm">2</span></span></span></span> </span></span> possible paths. </p>
+            </blockquote>
+            <p>This figure can better be expressed as having a bound <span style="display:inline-block"><span> <span
+                    class="katex"><span class="katex-mathml"><math>
+                        <semantics>
+                          <mrow>
+                            <mi>O</mi>
+                            <mo>(</mo>
+                            <mi mathvariant="normal">∣</mi>
+                            <mi>V</mi>
+                            <mi mathvariant="normal">∣</mi>
+                            <mo>!</mo>
+                            <mo>)</mo>
+                          </mrow>
+                          <annotation encoding="application/x-tex">O(|V|!)</annotation>
+                        </semantics>
+                      </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                        style="height:0.75em;"></span><span class="strut bottom"
+                        style="height:1em;vertical-align:-0.25em;"></span><span class="base textstyle uncramped"><span
+                          class="mord mathit" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span
+                          class="mord mathrm">∣</span><span class="mord mathit"
+                          style="margin-right:0.22222em;">V</span><span class="mord mathrm">∣</span><span
+                          class="mclose">!</span><span class="mclose">)</span></span></span></span> </span></span>
+              possible paths. As explored above, a factorial upper bound is simply far too great for real applications.
+            </p><span __expr__="[object Object]" class="action">Click to see a walkthrough of the Naive solution!</span>
+          </div>
+        </div>
+      </div>
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+      <div style="max-width:90vw;width:45vw;margin:0 auto;padding:0 20px;margin-left:2.5vw;margin-right:2.5vw"
+        class="idyll-BlogWriteup">
+        <h1 id="nn_header">Nearest Neighbor</h1>
+      </div>
+      <div class="float right" style="float:right;width:50%">
+        <div style="width:100%"></div>
+        <p>Speed:<br /><var name="speed2" value="50"></var></p><var name="isAutoPlaying2" value="false"></var><var
+          name="increment2" value="false"></var><var name="decrement2" value="false"></var><var name="finalResult2"
+          value="false"></var><var name="updatedCity2" value="false"></var><input type="range" value="50" min="0"
+          max="100" step="1" /><button>←</button><button><span>▷</span></button><button>→</button><button>Final
+          Result</button><button>↺</button><br />
+      </div>
+      <div style="max-width:90vw;width:45vw;margin:0 auto;padding:0 20px;margin-left:2.5vw;margin-right:2.5vw"
+        class="idyll-BlogWriteup"><var name="slideNN" value="1"></var>
+        <div class="slideshow" style="position:relative">
+          <div class="slide" style="position:absolute">
+            <p>
+            <h3>Introduction</h3>
+            While the <a href="./Traveling-Salesman-Algorithms.html#naive_header"><code>Naïve</code></a> approach
+            guarantees to find the exact solution in a short amount of time, the <strong>Nearest Neighbor</strong> (NN)
+            approximation algorithm attempts to find a decent solution in as little time as possible. After starting at
+            a random city, the algorithm follows a very simple process:
+            <br /><br /><br />
+            <blockquote>Choose the next city in the path to be the closest city that you have not already visited. Once
+              all cities have been visited, the salesman return home.</blockquote>
+            </p>
+            <p><br /><br />
+              Next: <span __expr__="[object Object]" class="action">Click here for a quick walkthrough of the
+                algorithm!</span></p>
+          </div>
+        </div>
+      </div>
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+      <div style="max-width:90vw;width:45vw;margin:0 auto;padding:0 20px;margin-left:2.5vw;margin-right:2.5vw"
+        class="idyll-BlogWriteup">
+        <h1 id="christofides_header">Christofides Algorithm</h1>
+      </div>
+      <div class="float right" style="float:right;width:50%">
+        <p>
+        <div style="width:100%"></div>
+        Steps: <button>Intro</button><button>MST</button><button>Odd
+          Vertices</button><button>Matches</button><button>Eulerian</button><button>Hamiltonian</button></p>
+      </div>
+      <div style="max-width:90vw;width:45vw;margin:0 auto;padding:0 20px;margin-left:2.5vw;margin-right:2.5vw"
+        class="idyll-BlogWriteup"><var name="slide" value="1"></var>
+        <div class="slideshow" style="position:relative">
+          <div class="slide" style="position:absolute">
+            <p>
+            <h3>Introduction</h3>
+            One of the most famous approaches to the TSP, and possibly one of the most renowned algorithms in all of
+            theoretical Computer Science, is Christofides’ Algorithm. Created by Nicos Christofides in the late 1970s,
+            it is
+            a multistep algorithm that guarantees its solution to the TSP will be within 3/2 of the optimal solution.
+            Since the algorithm is multistep in nature, it’s running time and complexity varies based on the running
+            time its
+            components. The upper bound on computations for Christofides’ Algorithm is roughly <span
+              style="display:inline-block"><span> <span class="katex"><span class="katex-mathml"><math>
+                      <semantics>
+                        <mrow>
+                          <mi>O</mi>
+                          <mo>(</mo>
+                          <mi mathvariant="normal">∣</mi>
+                          <mi>V</mi>
+                          <msup>
+                            <mi mathvariant="normal">∣</mi>
+                            <mn>4</mn>
+                          </msup>
+                          <mo>)</mo>
+                        </mrow>
+                        <annotation encoding="application/x-tex">O(|V|^4)</annotation>
+                      </semantics>
+                    </math></span><span class="katex-html" aria-hidden="true"><span class="strut"
+                      style="height:0.8141079999999999em;"></span><span class="strut bottom"
+                      style="height:1.064108em;vertical-align:-0.25em;"></span><span
+                      class="base textstyle uncramped"><span class="mord mathit"
+                        style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span
+                        class="mord mathrm">∣</span><span class="mord mathit"
+                        style="margin-right:0.22222em;">V</span><span class="mord"><span
+                          class="mord mathrm">∣</span><span class="msupsub"><span class="vlist"><span
+                              style="top:-0.363em;margin-right:0.05em;"><span
+                                class="fontsize-ensurer reset-size5 size5"><span
+                                  style="font-size:0em;">​</span></span><span
+                                class="reset-textstyle scriptstyle uncramped mtight"><span
+                                  class="mord mathrm mtight">4</span></span></span><span class="baseline-fix"><span
+                                class="fontsize-ensurer reset-size5 size5"><span
+                                  style="font-size:0em;">​</span></span>​</span></span></span></span><span
+                        class="mclose">)</span></span></span></span> </span></span>: significantly better than any of
+            the exact solution approaches.</p>
+            <p>This section is meant to serve as a “slide show” that will walk you through the previously outlined 5
+              steps of Christofides’ Algorithm. At each step
+              after this one you will be able to switch between a <span __expr__="[object Object]" class="action">Small
+                Dataset</span>, <span __expr__="[object Object]" class="action">Medium Dataset</span>,
+              and <span __expr__="[object Object]" class="action">Large Dataset</span>, <span __expr__="[object Object]"
+                class="action">Clear</span> the edges in the graph, and move to the previous step and
+              <span __expr__="[object Object]" class="action">Next Step</span>
+              in the algorithm.
+            </p>
+            <p>In addition, each step can be accessed by clicking its corresponding button underneath the map to the
+              right.
+              <br /><br />
+              Next Step: <span __expr__="[object Object]" class="action">Minimum Spanning Tree</span>
+            </p>
+          </div>
+        </div>
+      </div>
+      <br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br /><br />
+      <div style="max-width:800px;width:calc(100vw - 2 * 200px);margin:0 auto;padding:0 20px"
+        class="idyll-CenteredWriteup">
+        <p>
+        <h1 id="complexity">Algorithm Analysis</h1>
+        Throughout the article we have introduced several different algorithms for solving the Traveling Salesman
+        Problem. The use cases for these algorithms is primarily based on their runtime performance vs error % tradeoff.
+        So, during this section we will compare how the algorithms compare to one another.<var name="maxX"
+          value="1000"></var>
+        <div style="width:100%"></div>
+        <div style="width:100%"></div>
+        Less Cities <input type="range" value="1000" min="500" max="2000" step="1" /> More Cities</p>
+        <p>While the Naïve and dynamic programming approaches always calculate the exact solution, it comes at the cost
+          of enormous runtime; datasets beyond 15 vertices are too large for personal computers. The most common
+          approximation algorithm, Nearest Neighbor, can produce a very good result (within 25% of the exact solution)
+          for most cases, however it has no guarantee on its error bound. That said, Christofides algorithm has the
+          current best
+          error bound of within 50% of the exact solution for approximation algorithms. Christofides produces this
+          result in
+          a “good” runtime compared to Naïve and dynamic, but it still significantly slower than the Nearest Neighbor
+          approach.</p>
+        <p>In the chart above the runtimes of the naive, dynamic programming, nearest neighbors, and Christofides’ are
+          plotted.
+          The x-axis represents the number of cities that the algorithm works on while the y-axis represents the
+          worst-case
+          amount of calculations it will need to make to get a solution. As you can see, as the number of cities
+          increases every algorithm
+          has to do more calculations however naive will end up doing significantly more. Note how with 20 cities, the
+          naive
+          algorithm is 5,800,490,399 times slower than even the minimally faster dynamic programming algorithm. </p>
+      </div>
+    </div>
+  </div>
+  <script src="./Traveling-Salesman-Algorithms/index.js"></script>
+</body>
+
+</html>
